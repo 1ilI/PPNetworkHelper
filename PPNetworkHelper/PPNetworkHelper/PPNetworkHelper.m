@@ -226,7 +226,16 @@ static AFHTTPSessionManager *_sessionManager;
         
         for (NSUInteger i = 0; i < images.count; i++) {
             // 图片经过等比压缩后得到的二进制文件
-            NSData *imageData = UIImageJPEGRepresentation(images[i], imageScale ?: 1.f);
+            NSData *imageData = [NSData data];
+            if ([imageType isEqualToString:@"png"] || [imageType isEqualToString:@"PNG"]) {
+                imageData = UIImagePNGRepresentation(images[i]);
+            }
+            else if ([imageType isEqualToString:@"jpg"] ||
+                     [imageType isEqualToString:@"JPG"] ||
+                     [imageType isEqualToString:@"JPEG"] ||
+                     [imageType isEqualToString:@"jpeg"]) {
+                imageData = UIImageJPEGRepresentation(images[i], imageScale ?: 1.f);
+            }
             // 默认图片的文件名, 若fileNames为nil就使用
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
